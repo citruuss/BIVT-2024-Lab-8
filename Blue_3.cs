@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +15,10 @@ namespace Lab_8
         {
             get
             {
-                if (_output == null) return null;
+                if (_output == null) 
+                {
+                    return null; 
+                }
                 (char, double)[] New = new (char, double)[_output.Length];
                 Array.Copy(_output, New, _output.Length);
                 return New;
@@ -67,6 +70,7 @@ namespace Lab_8
                 }
             }
             //в сортировке сначала сраниваем элементы по значению доли item2, еслиони равны сравниваем по алфавиному порядку
+            if (_output == null || _output.Length == 0) return;
             for (int i = 0; i < _output.Length; i++)
             {
                 for (int j = 0; j < _output.Length - i - 1; j++)
@@ -98,7 +102,7 @@ namespace Lab_8
                 result += ($"{_output[i].Item1} - {_output[i].Item2:f4}");
                 if (i != _output.Length - 1)
                 {
-                    result += "\n";
+                    result += Environment.NewLine;
                 }
             }
             return result;
