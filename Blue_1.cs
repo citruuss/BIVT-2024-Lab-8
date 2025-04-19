@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,17 +28,17 @@ namespace Lab_8
             //посчитаем кол-во строк по 50
             int count = 0, start=0;
             string text = Input;
+            int rest = 0;
             while (start< text.Length)
             {
-                count++;
-                int end = start + 50;
-                if (end >= text.Length)
+                rest= text.Length-start; 
+                
+                if (rest <= 50)
                 {
-                    start = text.Length;
-                    continue;
+                    count++; break;
                 }
                 //найдем пробел чтобы сделать перенос
-                int Space = -1;
+                int Space = -1, end=start+50;
                 for (int i =end; i>= start; i--)
                 {
                     if (i<text.Length && text[i] == ' ')
@@ -46,8 +46,10 @@ namespace Lab_8
                         Space = i; break;
                     }
                 }
-                if (Space == -1) start = end;
+                if (Space <= start) start += 50;
                 else start = Space + 1;
+
+                count++;
             }
             //заполнение массива строками
             _output =new string[count];
@@ -55,11 +57,12 @@ namespace Lab_8
             int number = 0;
             while (start< text.Length)
             {
-                int end = start + 50;
-                if (end >= text.Length)
+                int restt = text.Length - start;
+                if (restt <= 50)
                 {
                     _output[number] = text.Substring(start); break;
                 }
+                int end = start+50;
 
                 //найдем пробел чтобы сделать перенос
                 int Space = -1;
@@ -70,7 +73,7 @@ namespace Lab_8
                         Space = i; break;
                     }
                 }
-                if (Space == -1) 
+                if (Space <=start) 
                 {
                     _output[number]= text.Substring(start, 50);
                     start += 50;
@@ -86,17 +89,9 @@ namespace Lab_8
 
         public override string ToString()
         {
-            if (_output == null) return null; 
-            string result = "";
-            for (int i = 0; i < _output.Length; i++)
-            {
-                result += _output[i];
-                if (i < _output.Length - 1)
-                {
-                    result += "\n";
-                }
-            }
-            return result;
+            if (_output == null || _output.Length==0) return null;
+            return string.Join(Environment.NewLine, _output);
+            
         }
 
 
